@@ -10,8 +10,12 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class TextUtil {
 	Logger log = LoggerFactory.getLogger(this.getClass());
@@ -38,8 +42,8 @@ public class TextUtil {
     	}
     }
     
-	public boolean Test () {
-		String filePath = "C:\\chae_tmp\\worspace_test\\Test.txt";
+	public boolean Test (String filNm) {
+		String filePath = filNm;
 		boolean t = false;
 		try {
 			
@@ -55,13 +59,13 @@ public class TextUtil {
 	    BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 
 	    // 파일에 쓰기
-	    writer.write("{\"answer\":34234}");
+	    writer.write("{\"kim\":34234}");
 	    writer.newLine();
-	    writer.write("{\"answer\":433356}");
+	    writer.write("{\"park\":433356}");
 	    writer.newLine();
-	    writer.write("{\"answer\":789}");
+	    writer.write("{\"lee\":789}");
 	    writer.newLine();
-	    writer.write("{\"answer\":222}");
+	    writer.write("{\"bae\":222}");
 	    writer.newLine();
 
 	    // 버퍼 및 스트림 뒷정리
@@ -74,16 +78,18 @@ public class TextUtil {
 	}
 	
 	//파일 테스트
-	public HashMap<String, Integer> returnValue (String fileNm) {
+	public HashMap<String, Integer> returnValue (String fileNm, String token) {
 		HashMap<String, Integer> userCnt = new HashMap<>();
 		try {
 			BufferedReader reader = new BufferedReader(
 				    new InputStreamReader(new FileInputStream(fileNm), "UTF-8"));
 	        String str;
 	        while ((str = reader.readLine()) != null) {
-	        	if (str.indexOf("answer\":") >= 0) {
+	        	if (str.indexOf(token+"\":") >= 0) {
 	        		//System.out.println(str);
-	        		System.out.println(str.substring(str.indexOf("wer\":")+5, str.length()-1));
+	        		String val = str.substring(str.indexOf(token+ "\":")+token.length()+2, str.length()-1);
+	        		System.out.println(val);
+	        		userCnt.put(token, Integer.parseInt(val) );
 	        	}
 	        }
 		 
@@ -92,6 +98,38 @@ public class TextUtil {
 			e.printStackTrace();
 		}
 		return userCnt;
+	}
+	
+	
+	//IP 
+	public String getUserIp(HttpServletRequest request) throws Exception {
+		
+		 String ip = request.getHeader("X-Forwarded-For");
+		 log.info("> X-FORWARDED-FOR : " + ip);
+
+		 if (ip == null) {
+		     ip = request.getHeader("Proxy-Client-IP");
+		     log.info("> Proxy-Client-IP : " + ip);
+		 }
+		 if (ip == null) {
+		     ip = request.getHeader("WL-Proxy-Client-IP");
+		     log.info(">  WL-Proxy-Client-IP : " + ip);
+		 }
+		 if (ip == null) {
+		     ip = request.getHeader("HTTP_CLIENT_IP");
+		     log.info("> HTTP_CLIENT_IP : " + ip);
+		 }
+		 if (ip == null) {
+		     ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		     log.info("> HTTP_X_FORWARDED_FOR : " + ip);
+		 }
+		 if (ip == null) {
+		     ip = request.getRemoteAddr();
+		     log.info("> getRemoteAddr : "+ip);
+		 }
+		 log.info("> Result : IP Address : "+ip);
+
+		 return ip;
 	}
 	
 }
