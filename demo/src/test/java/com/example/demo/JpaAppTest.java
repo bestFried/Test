@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @DataJpaTest
 @Slf4j
 public class JpaAppTest {
-	
+	 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired

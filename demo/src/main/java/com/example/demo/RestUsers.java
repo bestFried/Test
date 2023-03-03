@@ -7,7 +7,7 @@ public class RestUsers {
 	private final Long seq;
 	private String name; 
 	private String post; 
-	private int postCnt; 
+	private int postCnt;  
 	
 	public RestUsers (Long seq, String name, String post, int postCnt) {
 		this.seq = seq;

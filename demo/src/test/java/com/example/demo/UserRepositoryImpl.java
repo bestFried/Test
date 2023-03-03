@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 public class UserRepositoryImpl implements UserRepository {
 
 	//final JPAQueryFactory fff;
-	
-	/*
+	  
+	/* 
 	@Autowired
 	public UserRepositoryImpl(JPAQueryFactory qff) {
 		this.qf = qff;

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class DemoRestController {
-	
+	 
 	private static int cnt = 0;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	

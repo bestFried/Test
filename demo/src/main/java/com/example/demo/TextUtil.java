@@ -21,7 +21,7 @@ public class TextUtil {
     	
         Properties prop = new Properties();
 		String propFileName = "info.properties";
-
+ 
     	try {
     		InputStream is = getClass().getClassLoader().getResourceAsStream(propFileName);
     		if (is != null) {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository{
 	List<Users> findFirst2ByUserNmLikeOrderByIdDesc(String nm);
 	List<Users> findByIdOrderByIdDesc(long id);
-	
+	 
 	@Query(value="select user_nm, id from users us where us.id = :id ", nativeQuery = true)
 	Users selectSQLById(@Param(value ="id") long id);
 }
